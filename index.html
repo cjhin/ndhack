@@ -1,0 +1,86 @@
+<html>
+
+<head>
+	<style type="text/css">
+	
+	body {
+		font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+    font-weight: 300;
+	}
+
+	.bigHeader {
+		font-size:50pt;
+		position: absolute;
+    width: 410px;
+    height: 40px;
+    top: 50%;
+    left: 50%;
+    margin-left: -195px; /* margin is -0.5 * dimension */
+    margin-top: -40px; 
+
+		/* make the text un-selectable/un-highlightable */
+		user-select:none;
+		-webkit-user-select:none;
+		-moz-user-select:none;
+		-khtml-user-select:none;
+		cursor:pointer;
+	}
+	#name {
+		position: absolute;
+		bottom: 7px;
+		right: 8px;
+	}
+	</style>
+
+</head>
+
+
+<body>
+	<div class='bigHeader'>
+		<span id='herro' style="display:none;">
+			ND Hackathon Idea...
+		</span>
+		<span id='prease' style="display:none;">
+			Is currently nothing...
+		</span>
+	</div>
+
+
+	<div id='name'>
+		@chasjhin
+	</div>	
+
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script>
+		$(document).ready( function() {
+			var herroFirst = true;
+			var currFading = false;
+			
+			//initial fade in
+			$("#herro").delay(500).fadeIn(1000);
+
+			$(".bigHeader").click(function() { 
+				if(!currFading) { //ignore the click if currently animating
+					if(herroFirst) { //decide what to switch to
+						currFading = true;
+						$("#herro").fadeOut(1000, function() {
+							$("#prease").fadeIn(1000, function() {
+								currFading = false;
+							});
+						});
+					}
+					else {
+						currFading = true;
+						$("#prease").fadeOut(1000, function() {
+							$("#herro").fadeIn(1000, function() {
+								currFading = false;
+							});
+						});				
+					}
+					herroFirst = (!herroFirst);
+				}
+			});
+		});
+	</script>
+</body>
+</html>
