@@ -10,10 +10,10 @@ db = new Db('ndhack', server);
 db.open(function(err, db) {
     if(!err) {
         console.log("Connected to 'ndhack' database");
-        db.collection('users', {strict:true}, function(err, collection) {
+        db.collection('rides', {strict:true}, function(err, collection) {
             if (err) {
 				console.log(err);
-                console.log("The 'users' collection doesn't exist. Creating it with sample data...");
+                console.log("The 'rides' collection doesn't exist. Creating it with sample data...");
                 populateDB();
             }
         });
@@ -22,8 +22,8 @@ db.open(function(err, db) {
  
 exports.findById = function(req, res) {
     var id = req.params.id;
-    console.log('Retrieving user: ' + id);
-    db.collection('users', function(err, collection) {
+    console.log('Retrieving ride: ' + id);
+    db.collection('rides', function(err, collection) {
         collection.findOne({'_id':new BSON.ObjectID(id)}, function(err, item) {
             res.send(item);
         });
@@ -31,18 +31,18 @@ exports.findById = function(req, res) {
 };
  
 exports.findAll = function(req, res) {
-    db.collection('users', function(err, collection) {
+    db.collection('rides', function(err, collection) {
         collection.find().toArray(function(err, items) {
             res.send(items);
         });
     });
 };
  
-exports.addUser = function(req, res) {
-    var user = req.body;
-    console.log('Adding user: ' + JSON.stringify(user));
-    db.collection('users', function(err, collection) {
-        collection.insert(user, {safe:true}, function(err, result) {
+exports.addRide = function(req, res) {
+    var ride = req.body;
+    console.log('Adding ride: ' + JSON.stringify(ride));
+    db.collection('rides', function(err, collection) {
+        collection.insert(ride, {safe:true}, function(err, result) {
             if (err) {
                 res.send({'error':'An error has occurred'});
             } else {
@@ -53,28 +53,28 @@ exports.addUser = function(req, res) {
     });
 }
  
-exports.updateUser = function(req, res) {
+exports.updateRide = function(req, res) {
     var id = req.params.id;
-    var user = req.body;
-    console.log('Updating user: ' + id);
-    console.log(JSON.stringify(user));
-    db.collection('users', function(err, collection) {
-        collection.update({'_id':new BSON.ObjectID(id)}, user, {safe:true}, function(err, result) {
+    var ride = req.body;
+    console.log('Updating ride: ' + id);
+    console.log(JSON.stringify(ride));
+    db.collection('rides', function(err, collection) {
+        collection.update({'_id':new BSON.ObjectID(id)}, ride, {safe:true}, function(err, result) {
             if (err) {
-                console.log('Error updating user: ' + err);
+                console.log('Error updating ride: ' + err);
                 res.send({'error':'An error has occurred'});
             } else {
                 console.log('' + result + ' document(s) updated');
-                res.send(user);
+                res.send(ride);
             }
         });
     });
 }
  
-exports.deleteUser = function(req, res) {
+exports.deleteRide = function(req, res) {
     var id = req.params.id;
-    console.log('Deleting user: ' + id);
-    db.collection('users', function(err, collection) {
+    console.log('Deleting ride: ' + id);
+    db.collection('rides', function(err, collection) {
         collection.remove({'_id':new BSON.ObjectID(id)}, {safe:true}, function(err, result) {
             if (err) {
                 res.send({'error':'An error has occurred - ' + err});
@@ -92,18 +92,18 @@ exports.deleteUser = function(req, res) {
 
 var populateDB = function() {
  
-    var users = [
+    var rides = [
     {
         email: "cjhin@nd.edu",
-        section: "password1",
-    },
-    {
-        email: "npawelcz@nd.edu",
-        section: "password2",
+        destination: "Houston",
+		direction: "from",
+		time: "5:00pm",
+		date: "Sep 5",
+		seats: "4"
     }];
  
-    db.collection('users', function(err, collection) {
-        collection.insert(users, {safe:true}, function(err, result) {});
+    db.collection('rides', function(err, collection) {
+        collection.insert(rides, {safe:true}, function(err, result) {});
     });
  
 }; 

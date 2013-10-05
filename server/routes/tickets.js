@@ -5,15 +5,16 @@ var Server = mongo.Server,
     BSON = mongo.BSONPure;
  
 var server = new Server('localhost', 27017, {auto_reconnect: true});
-db = new Db('ticketdb', server);
+db = new Db('ndhack', server);
  
 db.open(function(err, db) {
     if(!err) {
-        console.log("Connected to 'ticketdb' database");
+        console.log("Connected to 'ndhack' database");
         db.collection('tickets', {strict:true}, function(err, collection) {
             if (err) {
+				console.log(err);
                 console.log("The 'tickets' collection doesn't exist. Creating it with sample data...");
-//                populateDB();
+                populateDB();
             }
         });
     }
@@ -88,25 +89,25 @@ exports.deleteTicket = function(req, res) {
 /*--------------------------------------------------------------------------------------------------------------------*/
 // Populate database with sample data -- Only used once: the first time the application is started.
 // You'd typically not find this code in a real-life app, since the database would already exist.
-/*
+
 var populateDB = function() {
  
-    var tickets = [
+    var ticket = [
     {
-        year: "2013",
         game: "Navy",
         email: "cjhin@nd.edu",
-        section: "Senior",
+        section: "Senior"
     },
     {
-        year: "2013",
         game: "USC",
         email: "npawelcz@nd.edu",
-        section: "Junior",
+        section: "Junior"
     }];
  
     db.collection('tickets', function(err, collection) {
-        collection.insert(tickets, {safe:true}, function(err, result) {});
+        collection.insert(ticket, {safe:true}, function(err, result) {
+			console.log(err);
+		});
     });
  
-};*/ 
+}; 
