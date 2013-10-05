@@ -1,4 +1,5 @@
 var mongo = require('mongodb');
+var email = require('./email');
  
 var Server = mongo.Server,
     Db = mongo.Db,
@@ -20,18 +21,54 @@ db.open(function(err, db) {
     }
 });
 
+
+exports.acceptOffer = function(req, res) {
+    var buyer_id = req.params.buyerid;
+    var seller_email = req.params.seller;
+
+	db.collection('users', function(err, collection) {
+		collection.findOne({'_id':new BSON.ObjectID(buyer_id)}, function(err, buyer_obj) {
+			var item = {
+				"buyer":buyer_obj.email,
+				"seller":seller_email,
+				"offer":req.params.offer,
+				"game":req.params.game,
+				"section":req.params.section,
+				"price":req.params.price
+			}
+			email.sendConnectEmail(item);	
+
+			res.redirect("http://chasjhin.com/ndhack/offer_complete.html");
+
+		});
+	});	
+};
+
 exports.buyTicket = function(req, res) {
-    var id = req.params.id;
+    var id = req.body.id;
+	var offer = req.body.offer;
     console.log('Retrieving ticket: ' + id);
     db.collection('tickets', function(err, collection) {
         collection.findOne({'_id':new BSON.ObjectID(id)}, function(err, item) {
+			if(err|| !item){
+				res.send(err);
+			}
+			//the ticket has been found in the database
+			if(!err && item) {
+				//before we send the email to the seller, we need to grab the buyer id
+				db.collection('users', function(err, collection) {
+					collection.findOne({'email':req.body.email}, function(err, buyer_obj) {
+						item.buyer = buyer_obj._id;
+						item.offer = offer;
+			console.log("ticket");
+						email.sendOfferEmail(item);
 
-			//the ticket has been found in the database, now send an email
-			//to the other user telling them its been found 
+						var return_item = "yay";
+						res.redirect("http://chasjhin.com/ndhack/offer_success.html");
 
-			//also mark as pending purchase
-
-//            res.send(item);
+					});
+				});	
+			}
         });
     });
 };
@@ -63,7 +100,7 @@ exports.addTicket = function(req, res) {
                 res.send({'error':'An error has occurred'});
             } else {
                 console.log('Success: ' + JSON.stringify(result[0]));
-                res.send(result[0]);//send back a static html page:
+				res.redirect("http://chasjhin.com/ndhack/tickets_success.html");
             }
         });
     });

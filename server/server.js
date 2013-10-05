@@ -54,7 +54,8 @@ app.post('/tickets', tickets.addTicket);
 app.put('/tickets/:id', tickets.updateTicket);
 app.delete('/tickets/:id', tickets.deleteTicket);
 
-app.post('/buyTicket',tickets.buyTicket);
+app.post('/buyticket',tickets.buyTicket);
+app.get('/acceptoffer/:buyerid/:seller/:offer/:game/:section/:price',tickets.acceptOffer);
 
 app.get('/rides', rides.findAll);
 app.get('/rides/:id', rides.findById);
