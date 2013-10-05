@@ -1,86 +1,37 @@
-<html>
-
-<head>
-	<style type="text/css">
+<!DOCTYPE html> 
+<html> 
+<head> 
+	<title>NDBay</title> 
 	
-	body {
-		font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
-    font-weight: 300;
-	}
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
 
-	.bigHeader {
-		font-size:50pt;
-		position: absolute;
-    width: 410px;
-    height: 40px;
-    top: 50%;
-    left: 50%;
-    margin-left: -195px; /* margin is -0.5 * dimension */
-    margin-top: -40px; 
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css" />
+	<link rel="stylesheet" href="styles.css" />
+	<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+	<script src="custom.js"></script>
+	<script src="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
+</head>  
 
-		/* make the text un-selectable/un-highlightable */
-		user-select:none;
-		-webkit-user-select:none;
-		-moz-user-select:none;
-		-khtml-user-select:none;
-		cursor:pointer;
-	}
-	#name {
-		position: absolute;
-		bottom: 7px;
-		right: 8px;
-	}
-	</style>
+	<body> 
 
-</head>
-
-
-<body>
-	<div class='bigHeader'>
-		<span id='herro' style="display:none;">
-			ND Hackathon Idea...
-		</span>
-		<span id='prease' style="display:none;">
-			Is currently nothing...
-		</span>
+	<div data-role="header" data-theme="b">
+		<h1>NDBay</h1>
 	</div>
 
+	<div data-role="content" data-theme="e">
+		<h2>I'm interested in...</h2>
 
-	<div id='name'>
-		@chasjhin
-	</div>	
+		<div class="ui-grid-a">
+			<div class="ui-block-a"><a href="tickets.html" data-role="button"><div class="linktext">Tickets</div></a></div>
+			<div class="ui-block-b"><a href="rides.html" data-role="button"><div class="linktext">Rides</div></a></div>
+			<div class="ui-block-a"><a href="books.html" data-role="button"><div class="linktext">Books</div></a></div> 
+			<div class="ui-block-b"><a href="furniture.html" data-role="button"><div class="linktext">Furniture</div></a></div>
+		</div> 
+	</div>
 
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-	<script>
-		$(document).ready( function() {
-			var herroFirst = true;
-			var currFading = false;
-			
-			//initial fade in
-			$("#herro").delay(500).fadeIn(1000);
-
-			$(".bigHeader").click(function() { 
-				if(!currFading) { //ignore the click if currently animating
-					if(herroFirst) { //decide what to switch to
-						currFading = true;
-						$("#herro").fadeOut(1000, function() {
-							$("#prease").fadeIn(1000, function() {
-								currFading = false;
-							});
-						});
-					}
-					else {
-						currFading = true;
-						$("#prease").fadeOut(1000, function() {
-							$("#herro").fadeIn(1000, function() {
-								currFading = false;
-							});
-						});				
-					}
-					herroFirst = (!herroFirst);
-				}
-			});
-		});
-	</script>
-</body>
+	<div data-role="footer" data-theme="b">
+		<h3>Chas Jhin and Nathaniel Pawelczyk</h1>
+	</div>
+	
+	</body>
 </html>
