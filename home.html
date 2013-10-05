@@ -14,28 +14,19 @@
 
 	<body> 
 
-	<div data-role="header" data-add-back-btn="true" data-theme="b">
-		<h1>Login</h1>
+	<div data-role="header" data-theme="b">
+		<h1>NDBay</h1>
 	</div>
 
 	<div data-role="content" data-theme="e">
+		<h2>I'm interested in...</h2>
 
-		<form action="http://198.58.109.224:8009/login" method="post">
-
-			<div data-role="fieldcontain">
-				<label for="netid">ND netid:</label>
-				<input type="text" name="netid" id="netid" value=""  />
-			</div>
-
-			<div data-role="fieldcontain">
-				<label for="price">Selling price:</label>
-				<input type="text" name="price" id="price" value=""  />
-			</div>
-
-			<button>Submit</button>
-
-		</form>
-		
+		<div class="ui-grid-a">
+			<div class="ui-block-a"><a href="tickets.html" data-role="button"><div class="linktext">Tickets</div></a></div>
+			<div class="ui-block-b"><a href="rides.html" data-role="button"><div class="linktext">Rides</div></a></div>
+			<div class="ui-block-a"><a href="books.html" data-role="button"><div class="linktext">Books</div></a></div> 
+			<div class="ui-block-b"><a href="furniture.html" data-role="button"><div class="linktext">Furniture</div></a></div>
+		</div> 
 	</div>
 
 	<div data-role="footer" data-theme="b">
