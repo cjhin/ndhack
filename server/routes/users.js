@@ -19,7 +19,17 @@ db.open(function(err, db) {
         });
     }
 });
- 
+
+exports.login = function(req, res) {
+    var id = req.params.netid;
+    console.log('Verifying if user exists: ' + netid);
+    db.collection('users', function(err, collection) {
+        collection.findOne({'netid':netid}, function(err, item) {
+            res.send(item);
+        });
+    });
+};
+
 exports.findById = function(req, res) {
     var id = req.params.id;
     console.log('Retrieving user: ' + id);
@@ -94,12 +104,12 @@ var populateDB = function() {
  
     var users = [
     {
-        email: "cjhin@nd.edu",
-        section: "password1",
+        netid: "cjhin",
+        password: "password1",
     },
     {
-        email: "npawelcz@nd.edu",
-        section: "password2",
+        netid: "npawelcz",
+        password: "password2",
     }];
  
     db.collection('users', function(err, collection) {

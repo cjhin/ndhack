@@ -19,6 +19,22 @@ db.open(function(err, db) {
         });
     }
 });
+
+exports.buyTicket = function(req, res) {
+    var id = req.params.id;
+    console.log('Retrieving ticket: ' + id);
+    db.collection('tickets', function(err, collection) {
+        collection.findOne({'_id':new BSON.ObjectID(id)}, function(err, item) {
+
+			//the ticket has been found in the database, now send an email
+			//to the other user telling them its been found 
+
+			//also mark as pending purchase
+
+//            res.send(item);
+        });
+    });
+};
  
 exports.findById = function(req, res) {
     var id = req.params.id;
@@ -96,12 +112,16 @@ var populateDB = function() {
     {
         game: "Navy",
         email: "cjhin@nd.edu",
-        section: "Senior"
+        section: "Senior",
+		price: "52.32",
+		status: "listed"
     },
     {
         game: "USC",
         email: "npawelcz@nd.edu",
-        section: "Junior"
+        section: "Junior",
+		price: "41.32",
+		status: "listed"
     }];
  
     db.collection('tickets', function(err, collection) {
